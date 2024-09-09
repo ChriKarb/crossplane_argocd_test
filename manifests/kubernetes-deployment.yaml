@@ -1,0 +1,29 @@
+apiVersion: kubernetes.crossplane.io/v1alpha1
+kind: Object
+metadata:
+  name: hello-world-deployment
+spec:
+  forProvider:
+    manifest:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: hello-world
+        namespace: default
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: hello-world
+        template:
+          metadata:
+            labels:
+              app: hello-world
+          spec:
+            containers:
+            - name: hello-world
+              image: nginx
+              ports:
+              - containerPort: 80
+  providerConfigRef:
+    name: default
